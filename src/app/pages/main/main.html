@@ -1,0 +1,98 @@
+<app-switch-theme />
+<body class="flex flex-col justify-center items-center p-5">
+  <div class="flex flex-col gap-5">
+    <header class="flex justify-between mb-5">
+      <div>
+        <h1 class="text-3xl font-extrabold">Minhas Tarefas</h1>
+      </div>
+      <p-button icon="pi pi-sign-out" (onClick)="logout()" variant="text"></p-button>
+    </header>
+
+    <section class="flex flex-col gap-5">
+      <div class="flex gap-5">
+        <p-card class="w-50 text-center">
+          <h2 class="text-2xl font-bold">{{stats.totalTasks}}</h2>
+          <p>Total</p>
+        </p-card>
+        <p-card class="w-50 text-center">
+          <h2 class="text-2xl font-bold">{{stats.activeTasks}}</h2>
+          <p>Ativas</p>
+        </p-card>
+        <p-card class="w-50 text-center">
+          <h2 class="text-2xl font-bold">{{stats.completedTasks}}</h2>
+          <p>Concluidas</p>
+        </p-card>
+      </div>
+      <form #form="ngForm" (ngSubmit)="addTask()" class="flex gap-2">
+        <input type="text" placeholder="Adicionar nova tarefa" pInputText fluid name="task" [(ngModel)]="task.title" autocomplete="off"/>
+        <p-button icon="pi pi-plus" [disabled]="!task.title" type="submit" />
+      </form>
+      <div class="flex w-full gap-2">
+        <div class="flex-1">
+          <p-button label="Todas" [severity]="activeFilter === 'todas' ? 'primary' : 'secondary'"
+            [disabled]="activeFilter === 'todas'" (onClick)="setFilter('todas')" styleClass="w-full">
+          </p-button>
+        </div>
+
+        <div class="flex-1">
+          <p-button label="Ativas" [severity]="activeFilter === 'ativas' ? 'primary' : 'secondary'"
+            [disabled]="activeFilter === 'ativas'" (onClick)="setFilter('ativas')" styleClass="w-full">
+          </p-button>
+        </div>
+
+        <div class="flex-1">
+          <p-button label="Concluídas" [severity]="activeFilter === 'concluidas' ? 'primary' : 'secondary'"
+            [disabled]="activeFilter === 'concluidas'" (onClick)="setFilter('concluidas')" styleClass="w-full">
+          </p-button>
+        </div>
+      </div>
+      <div class="flex flex-col gap-2">
+        @if (taskList && taskList.length > 0) {
+        @for (item of taskList; track item.id) {
+        <p-card class="h-20">
+          @if(editingTaskId === item.id){
+          <form #formEdit="ngForm" (submit)="updateTask(item)">
+            <div [ngClass]="['h-20']">
+              <div class="flex justify-between gap-2">
+                <div class="flex-1 flex items-center gap-3">
+                  <p-checkbox (onChange)="checkedTask(item)" name="taskCompleted" [(ngModel)]="item.completed"
+                    [binary]="true" />
+                  <input type="text" [(ngModel)]="editedTitle" name="editTitle" pInputText fluid
+                    [ngModelOptions]="{standalone: true}" />
+                </div>
+                <div class="flex items-center gap-1">
+                  <p-button icon="pi pi-check" variant="text" severity="success" type="submit"></p-button>
+                  <p-button icon="pi pi-times" variant="text" severity="danger" (onClick)="cancelEdit()"></p-button>
+                </div>
+              </div>
+            </div>
+          </form>
+          } @else {
+          <div class="flex justify-between">
+            <div class="flex items-center gap-3">
+              <p-checkbox (onChange)="checkedTask(item)" [(ngModel)]="item.completed" [binary]="true" />
+              <p [class.line-through]="item.completed">{{item.title}}</p>
+            </div>
+            <div class="flex items-center gap-1">
+              <p-button icon="pi pi-pen-to-square" variant="text" severity="secondary"
+                (onClick)="editTask(item)"></p-button>
+              <p-button icon="pi pi-trash" variant="text" severity="danger" (onClick)="deleteTask(item.id)"></p-button>
+            </div>
+          </div>
+          }
+        </p-card>
+        }
+        @if(totalPage > 1){
+          <p-paginator [first]="first" [rows]="rows" [totalRecords]="totalTasks" (onPageChange)="onPageChange($event)"
+            [showFirstLastIcon]="false"></p-paginator>
+        }
+        } @else {
+          <div class="flex flex-col justify-center items-center gap-3 h-80">
+            <i class="pi pi-check-circle text-zinc-500" style="font-size: 3rem"></i>
+            <p class="text-zinc-500">Nenhuma tarefa ainda. Adicione uma acima!</p>
+          </div>
+        }
+      </div>
+    </section>
+  </div>
+</body>

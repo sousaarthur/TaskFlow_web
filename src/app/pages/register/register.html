@@ -1,0 +1,51 @@
+<app-switch-theme />
+
+<div class="flex flex-col justify-center items-center w-full h-dvh p-5 gap-5">
+  <header class="text-center">
+    <h1 class="text-3xl font-extrabold">Criar Conta</h1>
+    <p class="text-zinc-500">Comece a organizar suas tarefas hoje</p>
+  </header>
+
+  <section>
+    <p-card class="p-2 w-100">
+      <form [formGroup]="registerForm" (ngSubmit)="onSubmit()" class="flex flex-col gap-5">
+        <div class="flex flex-col">
+          <label for="email">E-mail</label>
+          <input id="email" type="text" pInputText placeholder="exemplo@email.com" formControlName="login"
+            autocomplete="off" />
+          <small class="text-red-500" *ngIf="f['login'].touched && f['login'].invalid">
+            {{ f['login'].errors?.['required'] ? 'O e-mail é obrigatório.' : '' }}
+            {{ f['login'].errors?.['email'] ? 'Formato de e-mail inválido.' : '' }}
+          </small>
+        </div>
+        <div class="flex flex-col">
+          <label for="password">Senha</label>
+          <p-password formControlName="password" [toggleMask]="true" placeholder="••••••••" fluid autocomplete="off">
+          </p-password>
+          <small class="text-red-500" *ngIf="f['password'].touched && f['password'].invalid">
+            {{ f['password'].errors?.['required'] ? 'A senha é obrigatória.' : '' }}
+            {{ f['password'].errors?.['minlength'] ? 'A senha deve ter no mínimo 6 caracteres.' : '' }}
+          </small>
+        </div>
+        <div class="flex flex-col">
+          <label for="confirmPassword">Confirme sua senha</label>
+          <p-password formControlName="confirmPassword" [toggleMask]="true" [feedback]="false" placeholder="••••••••"
+            fluid autocomplete="off">
+          </p-password>
+          <small class="text-red-500" *ngIf="f['confirmPassword'].touched && registerForm.errors?.['mismatch']">
+            As senhas não coincidem.
+          </small>
+        </div>
+
+        <div class="flex flex-col w-full gap-2">
+          <p-button label="Registrar-se" severity="primary" styleClass="w-full" type="submit"/>
+
+          <p class="text-center text-zinc-500">
+            Já tem uma conta?
+            <a [routerLink]="['/login']" class="text-indigo-500">Fazer login</a>
+          </p>
+        </div>
+      </form>
+    </p-card>
+  </section>
+</div>

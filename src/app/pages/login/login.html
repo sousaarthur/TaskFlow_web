@@ -1,0 +1,42 @@
+<app-switch-theme></app-switch-theme>
+
+<div class="flex flex-col justify-center items-center w-full h-dvh p-5 gap-5">
+  <header class="text-center">
+    <h1 class="text-3xl font-extrabold">Entrar</h1>
+    <p class="text-zinc-500">Acesse sua conta para gerenciar suas tarefas</p>
+  </header>
+
+  <section>
+    <p-card class="p-2 w-100">
+      <form [formGroup]="loginForm" (ngSubmit)="onSubmit()" class="flex flex-col gap-5">
+        <div class="flex flex-col">
+          <label for="email">E-mail</label>
+          <input id="email" type="email" pInputText placeholder="exemplo@email.com" formControlName="login"
+            autocomplete="off" />
+          <small class="text-red-500" *ngIf="f['login'].touched && f['login'].invalid">
+            {{ f['login'].errors?.['required'] ? 'O e-mail é obrigatório.' : '' }}
+            {{ f['login'].errors?.['email'] ? 'Formato de e-mail inválido.' : '' }}
+          </small>
+        </div>
+        <div class="flex flex-col">
+          <label for="password">Senha</label>
+          <p-password formControlName="password" [toggleMask]="true" [feedback]="false" placeholder="••••••••" fluid
+            autocomplete="off">
+          </p-password>
+          <small class="text-red-500" *ngIf="f['password'].touched && f['password'].invalid">
+            {{ f['password'].errors?.['required'] ? 'A senha é obrigatória.' : '' }}
+            {{ f['password'].errors?.['minlength'] ? 'A senha deve ter no mínimo 6 caracteres.' : '' }}
+          </small>
+        </div>
+        <div class="flex flex-col w-full gap-2">
+          <p-button label="Entrar" severity="primary" styleClass="w-full" type="submit" [disabled]="loginForm.invalid">
+          </p-button>
+          <p class="text-center text-zinc-500">
+            Não tem uma conta?
+            <a [routerLink]="['/register']" class="text-indigo-500">Cadastra-se</a>
+          </p>
+        </div>
+      </form>
+    </p-card>
+  </section>
+</div>
