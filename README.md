@@ -2,25 +2,6 @@
 
 Interface web moderna para gerenciamento de tarefas desenvolvida em Angular, que se conecta à [API TaskFlow](https://github.com/sousaarthur/TaskFlow_api) para oferecer uma experiência completa de produtividade.
 
-## 📋 Índice
-
-- [Sobre o Projeto](#sobre-o-projeto)
-- [Funcionalidades](#funcionalidades)
-- [Tecnologias](#tecnologias)
-- [Pré-requisitos](#pré-requisitos)
-- [Instalação](#instalação)
-- [Como Executar](#como-executar)
-- [Estrutura do Projeto](#estrutura-do-projeto)
-- [Componentes](#componentes)
-- [Serviços](#serviços)
-- [Interfaces](#interfaces)
-- [Roteamento](#roteamento)
-- [Temas](#temas)
-- [Screenshots](#screenshots)
-- [Build](#build)
-- [Testes](#testes)
-- [API Integration](#api-integration)
-
 ## 🚀 Sobre o Projeto
 
 TaskFlow Web é uma aplicação frontend moderna construída com Angular que oferece uma interface intuitiva para gerenciamento de tarefas. A aplicação se comunica com a API TaskFlow para fornecer funcionalidades completas de CRUD de tarefas, autenticação JWT e estatísticas em tempo real.
